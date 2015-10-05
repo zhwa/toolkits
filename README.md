@@ -1,2 +1,2 @@
 # toolkits
-Implementations of algorithms in Python.
+Implementations of algorithms in Python. For learning purposes only. 
