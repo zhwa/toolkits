@@ -17,6 +17,36 @@ from ..regression import bfgs
 
 
 
+class LR(object):
+    def __init__(self, d, K):
+        self.K = int(K)
+        self.d = int(d)
+        self.beta = np.random.rand(K,d)
+
+    def prb(self, x, k):
+        return  np.exp(self.beta[k].dot(x)) / sum(map(lambda kk: np.exp(self.beta[kk].dot(x)), range(self.K)))
+
+    def predict(self, x):
+        prob = map(lambda k: self.prb(x, k), range(self.K))
+        return prob.index(max(prob))
+
+    def train(self, data, labels):
+        """ data should be in d dimension """
+        step = 100
+        alpha = 0.01
+        iters = 0
+        while abs(sum(step)) > 0.01:
+            iters += 1
+            for k in range(self.K):
+                step = np.sum(map(lambda (x, y): (1 - self.prb(x, y)) * x, zip(data, labels)), axis=0)
+                self.beta[k,:] += alpha * step
+
+
+    
+
+
+
+
 
 # The sigmoid function
 sigmoid = lambda z: 1.0 / (1.0 + np.e ** (-1.0 * z))
@@ -54,7 +84,6 @@ def predict(rawVec, w):
         return 1
     else:
         return 0
-
 
 
 
