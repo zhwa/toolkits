@@ -7,6 +7,8 @@ Arguments:
     w: weight vector
     x: featuer vector, the user should attach a 1.0 either to the begining or the end
     y: label, should be a nonnegative integer
+    K: total number of categories
+    d: dimension
 
 Z. Wang
 wangzhe0543@gmail.com
@@ -50,12 +52,13 @@ class LR(object):
 
     def train(self, data, labels, sgd=True):
         """
-        Stochastic Gradient Decent
+        (Stochastic) Gradient Decent
         """
         alpha = 1e-3
         iters = 0
         num = 100
         if not sgd:
+            # Gradient Decent
             while iters < num:
                 iters += 1
                 for k in range(self.K):
@@ -63,6 +66,7 @@ class LR(object):
                     step = np.sum(s, axis=0)
                     self.beta[k,:] += alpha * step
         else:
+            # Stochastic Gradient Decent
             while iters < num:
                 iters += 1
                 for (x,y) in zip(data, labels):
