@@ -5,7 +5,8 @@ implementation of Logistic Regression
 Arguments:
 
     w: weight vector
-    g: gradient function
+    x: featuer vector, the user should attach a 1.0 either to the begining or the end
+    y: label, should be a nonnegative integer
 
 Z. Wang
 wangzhe0543@gmail.com
@@ -27,7 +28,8 @@ class LR(object):
         self.beta = np.random.rand(K,d)
 
     def prb(self, x, k):
-        return np.exp(self.beta[k,:].dot(x)) / sum(map(lambda kk: np.exp(self.beta[kk,:].dot(x)), range(self.K)))
+        g = lambda k: np.exp(self.beta[k,:].dot(x))
+        return g(k) / sum(map(g, range(self.K)))
 
     def predict(self, x):
         prob = map(lambda k: self.prb(x, k), range(self.K))
@@ -45,23 +47,26 @@ class LR(object):
             err += self.judge(x, y)
         return 1 - err / len(data)
 
-    def train(self, data, labels, sgd=False):
+    def train(self, data, labels, sgd=True):
         """
-        Gradient Decent
+        Stochastic Gradient Decent
         """
         alpha = 1e-3
         iters = 0
-        while iters < 500:
-            iters += 1
-            for k in range(self.K):
-                if not sgd:
-                    s = map(lambda (x, y): self.judge(y, k) * (1 - self.prb(x, y)) * x, zip(data, labels))
+        num = 100
+        if not sgd:
+            while iter < num:
+                iters += 1
+                for k in range(self.K):
+                    s = map(lambda (x,y): self.judge(y, k) * (1 - self.prb(x, k)) * x, zip(data, labels))
                     step = np.sum(s, axis=0)
                     self.beta[k,:] += alpha * step
-                else:
-                    for (x,y) in zip(data, labels):
-                        step = self.judge(x,y) * (1 - self.prb(x, y)) * x
-                        alpha = 0.1
+        else:
+            while iters < num:
+                iters += 1
+                for (x,y) in zip(data, labels):
+                    for k in range(self.K):
+                        step = self.judge(y, k) * (1 - self.prb(x, k)) * x
                         self.beta[k,:] += alpha * step
 
 
@@ -79,8 +84,8 @@ def test():
     clf = LR(d=3, K=2)
     clf.train(X, y)
     """ decision region """
-    for ix in np.arange(4.0, 7.5, 0.05):
-        for iy in np.arange(1.5, 5.0, 0.05):
+    for ix in np.arange(4.0, 7.5, 0.1):
+        for iy in np.arange(1.5, 5.0, 0.1):
             pred = clf.predict(np.array([ix,iy,1]))
             if pred == y[0]:
                 ax.scatter(ix, iy, color="green", alpha=0.2)
