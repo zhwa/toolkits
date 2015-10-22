@@ -79,8 +79,8 @@ def test():
     clf = LR(d=3, K=2)
     clf.train(X, y)
     """ decision region """
-    for ix in np.arange(4.0, 7.5, 0.01):
-        for iy in np.arange(1.5, 5.0, 0.01):
+    for ix in np.arange(4.0, 7.5, 0.05):
+        for iy in np.arange(1.5, 5.0, 0.05):
             pred = clf.predict(np.array([ix,iy,1]))
             if pred == y[0]:
                 ax.scatter(ix, iy, color="green", alpha=0.2)
