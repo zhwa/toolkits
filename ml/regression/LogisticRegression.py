@@ -44,7 +44,8 @@ class LR(object):
     def score(self, data, labels):
         err = 0
         for (x,y) in zip(data, labels):
-            err += self.judge(x, y)
+            p = self.predict(x)
+            err += (p!=y)
         return 1 - err / len(data)
 
     def train(self, data, labels, sgd=True):
