@@ -55,7 +55,7 @@ class LR(object):
         iters = 0
         num = 100
         if not sgd:
-            while iter < num:
+            while iters < num:
                 iters += 1
                 for k in range(self.K):
                     s = map(lambda (x,y): self.judge(y, k) * (1 - self.prb(x, k)) * x, zip(data, labels))
