@@ -37,4 +37,12 @@ def featSelect(dataSet):
 
 
 def majorityVote(classList):
-    pass
+    votes = {}
+    for vote in classList:
+        if vote in votes:
+            votes[vote] += 1
+        else:
+            votes[vote] = 1
+    return max(votes.keys(), key=(lambda key: votes[key]))
+
+
