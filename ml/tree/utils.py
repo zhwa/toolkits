@@ -31,16 +31,11 @@ def ent(dataSet):
     return ent
 
 
-def infoGain(dataSet1, dataSet2):
-    """
-    information gain after the split
-    """
-    ent1 = ent(dataSet1)
-    N1 = len(dataSet1)
-    ent2 = ent(dataSet2)
-    N2 = len(dataSet2)
-    newEnt = (N1 / (N1 + N2)) * ent1 + (N2 / (N1 + N2)) * ent2
-    oldEnt = ent(np.vstack((dataSet1, dataSet2)))
-    return oldEnt - newEnt
-
-
+def createDataSet():
+    dataSet = [[1, 1, "yes"],
+               [1, 1, "yes"],
+               [1, 0, "no"],
+               [0, 1, "no"],
+               [0, 1, "no"]]
+    labels = ["no surfacing", "flippers"]
+    return np.array(dataSet), np.array(labels)
