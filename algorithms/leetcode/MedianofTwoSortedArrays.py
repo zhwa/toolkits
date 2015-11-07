@@ -15,7 +15,8 @@ class Solution(object):
 
         def locat(array, e):
             n = len(array)
-            if n <= 1: return 0 if e < array[0] else 1
+            if n == 0: return 0
+            if n == 1: return 0 if e < array[0] else 1
             else:
                 if array[n/2] > e: return locat(array[:n/2], e)
                 else: return 1 + n/2 + locat(array[n/2+1:], e)
@@ -46,5 +47,24 @@ class Solution(object):
                     else: return dq(a1[m:], a2[n:], rank-m-n)
         
         
-        rank = (len(nums1) + len(nums2))/2
-        return dq(nums1, nums2, rank)
+        m = len(nums1)
+        n = len(nums2)
+        rank = (m + n) / 2 - 1
+        if m == 0: return med(nums2)
+        if n == 0: return med(nums1)
+        if (m + n) % 2 == 0:
+            if nums1[0] < nums2[0]:
+                med1 = dq(nums1, nums2, rank)
+                med2 = dq(nums1[1:], nums2, rank-1)
+            else:
+                med1 = dq(nums1, nums2, rank)
+                med2 = dq(nums1, nums2[1:], rank-1)
+            return 0.5 * (med1 + med2)
+        else:
+            return dq(nums1, nums2, (m+n)/2)
+
+nums1 = [2,2,2]
+nums2 = [2,2,2,2]
+import pdb
+s = Solution()
+print s.findMedianSortedArrays(nums1, nums2)
