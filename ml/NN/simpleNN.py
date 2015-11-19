@@ -25,9 +25,9 @@ class NN(object):
         self.l2 = layer2
         self.no = output
 
-        self.a1 = [1.0] * self.l1
-        self.a2 = [1.0] * self.l2
-        self.ao = [1.0] * self.no
+        self.a1 = np.array([1.0] * self.l1)
+        self.a2 = np.array([1.0] * self.l2)
+        self.ao = np.array([1.0] * self.no)
 
         self.w1 = np.random.rand(self.l1, self.l2)
         self.w2 = np.random.rand(self.l2, self.no)
@@ -37,4 +37,17 @@ class NN(object):
 
 
     def forward(self, vec):
-        if 
+        self.a1[:] = vec[:]
+        self.a2 = np.array(map(lambda j: sigmoid(np.dot(self.a1, self.w1[:,j])), range(self.l2)))
+        self.ao = np.array(map(lambda j: sigmoid(np.dot(self.a2, self.w2[:,j])), range(self.no)))
+        return self.ao
+
+
+    def bp(slef, lables, N, M):
+        """
+        Back Propogation
+        labels: the label of data
+        N:
+        M:
+        """
+        
