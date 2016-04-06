@@ -62,7 +62,7 @@ class LR(object):
             while iters < num:
                 iters += 1
                 for k in range(self.K):
-                    s = map(lambda (x,y): self.judge(y, k) * (1 - self.prb(x, k)) * x, zip(data, labels))
+                    s = map(lambda (x,y): (self.judge(y, k) - self.prb(x, k)) * x, zip(data, labels))
                     step = np.sum(s, axis=0)
                     self.beta[k,:] += alpha * step
         else:
@@ -71,7 +71,7 @@ class LR(object):
                 iters += 1
                 for (x,y) in zip(data, labels):
                     for k in range(self.K):
-                        step = self.judge(y, k) * (1 - self.prb(x, k)) * x
+                        step = (self.judge(y, k) - self.prb(x, k)) * x
                         self.beta[k,:] += alpha * step
 
 
