@@ -21,6 +21,8 @@
 
 - Visit [http://192.168.99.101:8888/](http://192.168.99.101:8888/)
 
+- After finishing tasks, exit Jupyter Notebook --> exit Windows cmd --> exit Docker terminal --> shut down vdocker VM & default VM ("ACMI shutdown")
+
 
 Since Docker usually needs to have the same operating system on the Docker host system as it's in the Docker container (well, parts that is) you need a Linux VM to run a Docker container that is based on Linux under Windows. Docker itself opens port 8888 between the VM and the container. You have to explicitly tell it to forward the port from the outside of the VM to the open Docker container port by using said parameter -p 8888:8888.
 
