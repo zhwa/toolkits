@@ -1,6 +1,6 @@
 #1/usr/bin/env python
 """
-Lego piece implementation of Logistic Regression with Tensorflow
+Lego piece implementation of Softmax (not real Logistic Regression) with Tensorflow
 
 Credits: Richard Socher
 @cs334d
@@ -32,7 +32,7 @@ labels_placeholder = tf.placeholder(tf.int32, shape=(batch_size, n_classes))
 
 
 
-# Logistic Regression:   y = softmax(xW + b)
+# y = softmax(xW + b)
 weights = tf.Variable(tf.zeros([n_features, n_classes]))
 biases = tf.Variable(tf.zeros([n_classes]))
 logits = tf.matmul(input_placeholder, weights) + biases
@@ -76,10 +76,7 @@ for epoch in range(max_epochs):
     average_loss = 0
     for step, (input_batch, label_batch) in data_iterator(input_data, input_labels, batch_size, label_size):
         # feed dict
-        feed_dict = {
-            input_placeholder: input_batch,
-            labels_placeholder: label_batch
-            }
+        feed_dict = {input_placeholder: input_batch, labels_placeholder: label_batch}
         _, loss_value = sess.run([train_op, loss], feed_dict=feed_dict)
         average_loss += loss_value
 
