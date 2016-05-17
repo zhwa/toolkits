@@ -39,6 +39,11 @@ logits = tf.matmul(input_placeholder, weights) + biases
 
 
 # softmax func
+"""
+for black box implementation, use
+pred = tf.nn.softmax(logits)
+instead
+"""
 maxes = tf.expand_dims(tf.reduce_max(logits, reduction_indices=[1]), 1)
 x_red = logits - maxes
 x_exp = tf.exp(x_red)
