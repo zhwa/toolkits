@@ -5,7 +5,7 @@ functioning blocks of neural networks
 Z. Wang
 wangzhe0543@gmail.com
 """
-import numpy
+import numpy as np
 
 def affine_forward(x, w, b):
     out = x.reshape(x.shape[0], -1).dot(w) + b

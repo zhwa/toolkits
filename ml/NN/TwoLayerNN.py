@@ -98,6 +98,10 @@ class TwoLayerNet(object):
 
 
     def predict(self, X):
-        logits = self.probs(X)
+        logits = np.exp(self.scores(X))
         probs = logits / logits.sum(axis=1).reshape((-1,1))
         return np.argmax(probs, axis=1)
+
+
+
+
