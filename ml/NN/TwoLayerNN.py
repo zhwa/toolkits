@@ -26,6 +26,8 @@ class TwoLayerNet(object):
 
     def loss(self, X, y=None, reg=0.0):
 
+        W1, W2 = self.params["W1"], self.params["W2"]
+
         # forward path
         scores = self.scores(X)
 
